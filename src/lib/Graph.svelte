@@ -1,6 +1,4 @@
 <script>
-  import App from "../App.svelte";
-
   export var themeColor = "#4d89ff";
   export var count = 0;
   export var ceil = null;
