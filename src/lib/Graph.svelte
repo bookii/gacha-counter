@@ -1,7 +1,7 @@
 <script>
-  export const themeColor = "#4d89ff";
-  export const count = 100;
-  export const ceil = 200;
+  export var themeColor = "#4d89ff";
+  export var count = 0;
+  export var ceil = null;
 
   $: remaining = ceil - (count % ceil);
 
@@ -104,12 +104,11 @@
   }
 
   .count {
-    color: var(--label-color);
-    margin: -34px 0 -20px 4px;
+    margin: -40px 0 -20px 4px;
   }
 
   .count-sub {
     color: var(--secondary-label-color);
-    margin-bottom: -4px;
+    margin-bottom: -10px;
   }
 </style>

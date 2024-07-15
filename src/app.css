@@ -1,5 +1,6 @@
 :root {
   font-family: "Noto Sans JP", sans-serif;
+  color: var(--label-color);
   font-optical-sizing: auto;
   font-style: normal;
   --label-color: #4d4d4d;
