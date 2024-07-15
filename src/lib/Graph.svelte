@@ -9,6 +9,7 @@
 
   $: remaining = ceil - (count % ceil);
   $: isJustReachedCeil = count >= ceil && count % ceil < 10;
+  $: ceilCount = Math.floor(count / ceil);
 
   const radius = 180;
   const outlineWidth = 4;
@@ -78,12 +79,20 @@
       {#if ceil != null}
         <div class="count-ceil">
           {#if isJustReachedCeil}
-            <span class="number">{Math.floor(count / ceil)}</span>
+            <span
+              class="number"
+              style="visibility: {ceilCount >= 2 ? 'visible' : 'hidden'};"
+            >
+              {ceilCount >= 2 ? ceilCount : ""}
+            </span>
             <span class="ja">天井到達!</span>
           {:else}
-            {#if count > ceil}
-              <span class="number">{Math.ceil(count / ceil)}</span>
-            {/if}
+            <span
+              class="number"
+              style="visibility: {ceilCount >= 1 ? 'visible' : 'hidden'};"
+            >
+              {ceilCount >= 1 ? ceilCount + 1 : ""}
+            </span>
             <span class="ja">天井まで</span>
             <span class="number">{remaining}</span>
             <span class="ja">連</span>
@@ -152,6 +161,7 @@
   .count-ceil {
     color: var(--secondary-label-color);
     margin-bottom: -10px;
+    min-height: 30px;
   }
 
   .count-ceil > .number {
