@@ -21,13 +21,25 @@
     duration: 200,
     easing: cubicOut,
   });
+  var previousProportion = 0;
+
   $: {
-    if (isJustReachedCeil) {
-      proportion.set(1);
-    } else {
-      proportion.set(ceil == null ? 0 : ceil == 0 ? 0 : (count % ceil) / ceil);
-    }
+    const currentProportion = (() => {
+      if (isJustReachedCeil) {
+        return 1;
+      } else {
+        return ceil == null ? 0 : ceil == 0 ? 0 : (count % ceil) / ceil;
+      }
+    })();
+    const delta = Math.abs(previousProportion - currentProportion);
+    const duration = Math.max(250, Math.min(delta * 5000, 500));
+    proportion.set(currentProportion, {
+      duration: duration,
+      easing: cubicOut,
+    });
+    previousProportion = currentProportion;
   }
+
   $: circumference = 2 * Math.PI * graphRadius;
   $: strokeLength = circumference * $proportion;
   $: remainingStrokeLength = circumference * (1 - $proportion);
