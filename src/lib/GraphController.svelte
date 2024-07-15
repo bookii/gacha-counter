@@ -1,10 +1,10 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import IncrementButton from "./IncrementButton.svelte";
 
   const dispatch = createEventDispatcher();
   var count = 0;
-  var ceil = null;
+  var ceil = 200;
 
   $: {
     dispatch("updateCount", {
@@ -17,6 +17,12 @@
       ceil: ceil,
     });
   }
+
+  onMount(() => {
+    dispatch("updateCeil", {
+      ceil: ceil,
+    });
+  });
 
   /**
    * @param {number} step

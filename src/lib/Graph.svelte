@@ -3,7 +3,7 @@
 
   export var themeColor = "#4d89ff";
   export var count = 0;
-  export var ceil = null;
+  export var ceil = 0;
 
   import { tweened } from "svelte/motion";
 
@@ -25,7 +25,7 @@
     if (isJustReachedCeil) {
       proportion.set(1);
     } else {
-      proportion.set((count % ceil) / ceil);
+      proportion.set(ceil == null ? 0 : ceil == 0 ? 0 : (count % ceil) / ceil);
     }
   }
   $: circumference = 2 * Math.PI * graphRadius;
@@ -63,7 +63,7 @@
     </svg>
     <div class="element count-container">
       <div class="count">
-        <span class="number">{count}</span>
+        <span class="number">{count ?? 0}</span>
         <span class="ja">連</span>
       </div>
       {#if ceil != null}
