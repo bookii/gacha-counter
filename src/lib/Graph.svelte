@@ -17,10 +17,7 @@
   $: outlineRadius = radius + outlineWidth / 2;
   $: graphRadius = radius - graphWidth / 2;
 
-  const proportion = tweened(0, {
-    duration: 200,
-    easing: cubicOut,
-  });
+  const proportion = tweened(0);
   var previousProportion = 0;
 
   $: {
