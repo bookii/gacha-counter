@@ -1,0 +1,10 @@
+:root {
+  font-family: "Noto Sans JP", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  --label-color: #4d4d4d;
+  --secondary-label-color: #999999;
+  --background-color: #ffffff;
+  --border-color: #e6e6e6;
+  --border-width: 4px;
+}
