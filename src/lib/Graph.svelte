@@ -1,7 +1,11 @@
 <script>
+  import { cubicOut } from "svelte/easing";
+
   export var themeColor = "#4d89ff";
   export var count = 0;
   export var ceil = null;
+
+  import { tweened } from "svelte/motion";
 
   $: remaining = ceil - (count % ceil);
   $: isJustReachedCeil = count >= ceil && count % ceil < 10;
@@ -13,16 +17,20 @@
   $: outlineRadius = radius + outlineWidth / 2;
   $: graphRadius = radius - graphWidth / 2;
 
-  $: proportion = (() => {
+  const proportion = tweened(0, {
+    duration: 200,
+    easing: cubicOut,
+  });
+  $: {
     if (isJustReachedCeil) {
-      return 1;
+      proportion.set(1);
     } else {
-      return (count % ceil) / ceil;
+      proportion.set((count % ceil) / ceil);
     }
-  })();
+  }
   $: circumference = 2 * Math.PI * graphRadius;
-  $: strokeLength = circumference * proportion;
-  $: remainingStrokeLength = circumference * (1 - proportion);
+  $: strokeLength = circumference * $proportion;
+  $: remainingStrokeLength = circumference * (1 - $proportion);
 </script>
 
 <main>
