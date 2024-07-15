@@ -1,9 +1,12 @@
 <script>
+  import App from "../App.svelte";
+
   export var themeColor = "#4d89ff";
   export var count = 0;
   export var ceil = null;
 
   $: remaining = ceil - (count % ceil);
+  $: isJustReachedCeil = count >= ceil && count % ceil < 10;
 
   const radius = 180;
   const outlineWidth = 4;
@@ -12,7 +15,13 @@
   $: outlineRadius = radius + outlineWidth / 2;
   $: graphRadius = radius - graphWidth / 2;
 
-  $: proportion = count / ceil;
+  $: proportion = (() => {
+    if (isJustReachedCeil) {
+      return 1;
+    } else {
+      return (count % ceil) / ceil;
+    }
+  })();
   $: circumference = 2 * Math.PI * graphRadius;
   $: strokeLength = circumference * proportion;
   $: remainingStrokeLength = circumference * (1 - proportion);
@@ -48,14 +57,22 @@
     </svg>
     <div class="element count-container">
       <div class="count">
-        <span style="font-size: 108px;">{count}</span>
-        <span style="font-size: 36px;">連</span>
+        <span class="number">{count}</span>
+        <span class="ja">連</span>
       </div>
       {#if ceil != null}
-        <div class="count-sub">
-          <span style="font-size: 18px;">天井まで</span>
-          <span style="font-size: 30px;">{remaining}</span>
-          <span style="font-size: 18px">連</span>
+        <div class="count-ceil">
+          {#if isJustReachedCeil}
+            <span class="number">{Math.floor(count / ceil)}</span>
+            <span class="ja">天井到達!</span>
+          {:else}
+            {#if count > ceil}
+              <span class="number">{Math.ceil(count / ceil)}</span>
+            {/if}
+            <span class="ja">天井まで</span>
+            <span class="number">{remaining}</span>
+            <span class="ja">連</span>
+          {/if}
         </div>
       {/if}
     </div>
@@ -107,8 +124,28 @@
     margin: -40px 0 -20px 4px;
   }
 
-  .count-sub {
+  .count > .number {
+    font-size: 108px;
+    position: relative;
+    top: 2px;
+  }
+
+  .count > .ja {
+    font-size: 36px;
+  }
+
+  .count-ceil {
     color: var(--secondary-label-color);
     margin-bottom: -10px;
+  }
+
+  .count-ceil > .number {
+    font-size: 30px;
+    position: relative;
+    top: 1px;
+  }
+
+  .count-ceil > .ja {
+    font-size: 18px;
   }
 </style>
