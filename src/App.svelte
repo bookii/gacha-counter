@@ -4,14 +4,19 @@
 
   var count = 0;
   var ceil = null;
+  var themeColorCode = "#4d89ff";
 </script>
 
 <div class="wrapper">
   <main>
-    <Graph {count} {ceil} />
+    <Graph {count} {ceil} {themeColorCode} />
   </main>
 
   <aside>
+    <div class="colorPicker">
+      <input type="color" id="themeColor" bind:value={themeColorCode} />
+      <label for="themeColor">テーマカラー</label>
+    </div>
     <GraphController
       on:updateCount={(event) => (count = event.detail.count)}
       on:updateCeil={(event) => (ceil = event.detail.ceil)}
@@ -27,7 +32,19 @@
 
   aside {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     background-color: var(--secondary-background-color);
+  }
+
+  .colorPicker {
+    margin-top: 20px;
+  }
+
+  input[type="color"] {
+    height: 30px;
+  }
+
+  label {
+    font-size: 20px;
   }
 </style>

@@ -1,11 +1,12 @@
 <script>
   import { cubicOut } from "svelte/easing";
 
-  export var themeColor = "#4d89ff";
-  export var count = 0;
-  export var ceil = 0;
+  export var themeColorCode;
+  export var count;
+  export var ceil;
 
   import { tweened } from "svelte/motion";
+  import UpGradient from "./gradient/UpGradient.svelte";
 
   $: remaining = ceil - (count % ceil);
   $: isJustReachedCeil = count >= ceil && count % ceil < 10;
@@ -41,11 +42,15 @@
   $: circumference = 2 * Math.PI * graphRadius;
   $: strokeLength = circumference * $proportion;
   $: remainingStrokeLength = circumference * (1 - $proportion);
+
+  const colorId = "0";
+  const fillColorId = `url(#${colorId})`;
 </script>
 
 <main>
   <div class="container">
     <svg class="element" width={size} height={size}>
+      <UpGradient {themeColorCode} id={colorId} />
       <circle
         class="background"
         cx="50%"
@@ -62,10 +67,10 @@
       />
       <circle
         class="graph-filled"
-        style="--theme-color: {themeColor}"
         cx="50%"
         cy="50%"
         r={graphRadius}
+        stroke={fillColorId}
         stroke-width={graphWidth}
         stroke-dashoffset={circumference / 4}
         stroke-dasharray="{strokeLength}, {remainingStrokeLength}"
@@ -130,9 +135,6 @@
 
   .graph-filled {
     fill: transparent;
-    stroke: var(--theme-color);
-    transform: rotate(90);
-    transform-origin: center;
   }
 
   .count-container div {

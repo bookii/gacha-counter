@@ -54,6 +54,7 @@
 <style>
   .container {
     font-size: 20px;
+    margin-top: 20px;
   }
 
   .counter-container {
