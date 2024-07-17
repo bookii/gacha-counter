@@ -119,7 +119,7 @@
     position: relative;
     width: 360px;
     height: 360px;
-    padding-bottom: 12px;
+    padding: 12px 0;
   }
 
   .element {

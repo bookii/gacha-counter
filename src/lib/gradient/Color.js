@@ -11,7 +11,6 @@ export function shiftColor(hex) {
   // 輝度が小さいほど補正を大きくする
   let darknessByLuminousity = (100 - l) / 200 + 0.2;
   l = Math.min(100, l + 10 * (hueSpecificDarkness + darknessByLuminousity));
-  console.log(l)
   const newRgb = hslToRgb([h, s, l]);
   return rgbToHex(newRgb);
 }

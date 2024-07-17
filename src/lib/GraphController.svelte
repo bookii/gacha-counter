@@ -66,6 +66,7 @@
     font-size: 18px;
     display: grid;
     gap: 8px;
+    margin-top: 12px;
   }
 
   .counter-container {

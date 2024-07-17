@@ -8,6 +8,8 @@
   var count = 0;
   var ceil = null;
   var themeColorCode = "#4d89ff";
+  var backgroundColorCode = "#ffffff";
+
   var id = -1;
 
   var items = writable([createItem()]);
@@ -18,7 +20,7 @@
   }
 </script>
 
-<div class="wrapper">
+<div class="wrapper" style="--display-background-color: {backgroundColorCode}">
   <table>
     <tr class="graph">
       <td>
@@ -33,9 +35,19 @@
         />
       </td>
       <td>
-        <div class="colorPicker">
-          <input type="color" id="themeColor" bind:value={themeColorCode} />
-          <label for="themeColor">テーマカラー</label>
+        <div class="color-picker-container">
+          <div class="color-picker">
+            <input type="color" id="theme-color" bind:value={themeColorCode} />
+            <label for="theme-color">テーマ色</label>
+          </div>
+          <div class="color-picker">
+            <input
+              type="color"
+              id="background-color"
+              bind:value={backgroundColorCode}
+            />
+            <label for="background-color">背景色</label>
+          </div>
         </div>
       </td>
     </tr>
@@ -71,7 +83,7 @@
     <tr>
       <td />
       <td>
-        <div class="colorPicker">
+        <div>
           <button
             on:click={() =>
               items.update((items) => {
@@ -94,12 +106,12 @@
     justify-content: space-between;
   }
 
-  .graph {
-    padding-bottom: 32px;
-  }
-
   table {
     border-collapse: collapse;
+  }
+
+  td:nth-child(1) {
+    background-color: var(--display-background-color);
   }
 
   td {
@@ -111,6 +123,10 @@
     background-color: var(--background-color);
   }
 
+  .even td:nth-child(2) {
+    background-color: #f9f9f9;
+  }
+
   td:nth-child(3) {
     background-color: var(--background-color);
   }
@@ -119,15 +135,23 @@
     height: 30px;
   }
 
+  .color-picker-container {
+    display: grid;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .color-picker {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
   label {
     font-size: 16px;
   }
 
   .delete {
     color: crimson;
-  }
-
-  .even td:nth-child(2) {
-    background-color: #f9f9f9;
   }
 </style>
