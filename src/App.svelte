@@ -115,10 +115,6 @@
     background-color: var(--background-color);
   }
 
-  .colorPicker {
-    margin-top: 20px;
-  }
-
   input[type="color"] {
     height: 30px;
   }
