@@ -37,7 +37,7 @@
     <IncrementButton step={-10} on:click={() => increment(-10)} />
     <IncrementButton step={-1} on:click={() => increment(-1)} />
     <div class="counter-inner-container">
-      <input type="number" bind:value={count} step="1" />
+      <input type="number" name="count" bind:value={count} step="1" />
       <span>連</span>
     </div>
     <IncrementButton step={1} on:click={() => increment(1)} />
@@ -46,7 +46,7 @@
   <div></div>
   <div class="counter-container">
     <span>（天井</span>
-    <input type="number" bind:value={ceil} step="1" />
+    <input type="number" name="ceil" bind:value={ceil} step="1" />
     <span>連）</span>
   </div>
 </div>

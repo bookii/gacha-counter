@@ -1,5 +1,6 @@
 <script>
   import Graph from "./lib/Graph.svelte";
+  import Cell from "./lib/Cell.svelte";
   import GraphController from "./lib/GraphController.svelte";
 
   var count = 0;
@@ -10,6 +11,7 @@
 <div class="wrapper">
   <main>
     <Graph {count} {ceil} {themeColorCode} />
+    <Cell name="手毬たくさんラー" count="10" goal="4" {themeColorCode} />
   </main>
 
   <aside>

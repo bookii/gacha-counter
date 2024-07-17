@@ -5,8 +5,13 @@
 export function shiftColor(hex) {
   const rgb = hexToRgb(hex);
   let [h, s, l] = rgbToHsl(rgb);
-  h = (h + 5) % 360;
-  l = Math.min(100, l + (100 - l) * 0.2);
+  h = (h + 5) % 360
+  // 最も明るい色相 (=60) からの距離
+  let hueSpecificDarkness = Math.min(Math.abs(h - 60), Math.abs(h - 300)) / 90;
+  // 輝度が小さいほど補正を大きくする
+  let darknessByLuminousity = (100 - l) / 200 + 0.2;
+  l = Math.min(100, l + 10 * (hueSpecificDarkness + darknessByLuminousity));
+  console.log(l)
   const newRgb = hslToRgb([h, s, l]);
   return rgbToHex(newRgb);
 }

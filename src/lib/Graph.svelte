@@ -13,10 +13,10 @@
   $: ceilCount = Math.floor(count / ceil);
 
   const radius = 180;
-  const outlineWidth = 4;
+  const borderWidth = 4;
   const graphWidth = 45;
-  $: size = (radius + outlineWidth) * 2;
-  $: outlineRadius = radius + outlineWidth / 2;
+  $: size = (radius + borderWidth) * 2;
+  $: outlineRadius = radius + borderWidth / 2;
   $: graphRadius = radius - graphWidth / 2;
 
   const proportion = tweened(0);
@@ -43,70 +43,68 @@
   $: strokeLength = circumference * $proportion;
   $: remainingStrokeLength = circumference * (1 - $proportion);
 
-  const colorId = "0";
+  const colorId = "graph";
   const fillColorId = `url(#${colorId})`;
 </script>
 
-<main>
-  <div class="container">
-    <svg class="element" width={size} height={size}>
-      <UpGradient {themeColorCode} id={colorId} />
-      <circle
-        class="background"
-        cx="50%"
-        cy="50%"
-        r={outlineRadius}
-        stroke-width={outlineWidth}
-      />
-      <circle
-        class="graph-track"
-        cx="50%"
-        cy="50%"
-        r={graphRadius}
-        stroke-width={graphWidth}
-      />
-      <circle
-        class="graph-filled"
-        cx="50%"
-        cy="50%"
-        r={graphRadius}
-        stroke={fillColorId}
-        stroke-width={graphWidth}
-        stroke-dashoffset={circumference / 4}
-        stroke-dasharray="{strokeLength}, {remainingStrokeLength}"
-      />
-    </svg>
-    <div class="element count-container">
-      <div class="count">
-        <span class="number">{count ?? 0}</span>
-        <span class="ja">連</span>
-      </div>
-      {#if ceil != null}
-        <div class="count-ceil">
-          {#if isJustReachedCeil}
-            <span
-              class="number"
-              style="visibility: {ceilCount >= 2 ? 'visible' : 'hidden'};"
-            >
-              {ceilCount >= 2 ? ceilCount : ""}
-            </span>
-            <span class="ja">天井到達!</span>
-          {:else}
-            <span
-              class="number"
-              style="visibility: {ceilCount >= 1 ? 'visible' : 'hidden'};"
-            >
-              {ceilCount >= 1 ? ceilCount + 1 : ""}
-            </span>
-            <span class="ja">天井まで</span>
-            <span class="number">{remaining}</span>
-            <span class="ja">連</span>
-          {/if}
-        </div>
-      {/if}
+<div class="container">
+  <svg class="element" width={size} height={size}>
+    <UpGradient {themeColorCode} id={colorId} />
+    <circle
+      class="background"
+      cx="50%"
+      cy="50%"
+      r={outlineRadius}
+      stroke-width={borderWidth}
+    />
+    <circle
+      class="graph-track"
+      cx="50%"
+      cy="50%"
+      r={graphRadius}
+      stroke-width={graphWidth}
+    />
+    <circle
+      class="graph-filled"
+      cx="50%"
+      cy="50%"
+      r={graphRadius}
+      stroke={fillColorId}
+      stroke-width={graphWidth}
+      stroke-dashoffset={circumference / 4}
+      stroke-dasharray="{strokeLength}, {remainingStrokeLength}"
+    />
+  </svg>
+  <div class="element count-container">
+    <div class="count">
+      <span class="number">{count ?? 0}</span>
+      <span class="ja">連</span>
     </div>
+    {#if ceil != null}
+      <div class="count-ceil">
+        {#if isJustReachedCeil}
+          <span
+            class="number"
+            style="visibility: {ceilCount >= 2 ? 'visible' : 'hidden'};"
+          >
+            {ceilCount >= 2 ? ceilCount : ""}
+          </span>
+          <span class="ja">天井到達!</span>
+        {:else}
+          <span
+            class="number"
+            style="visibility: {ceilCount >= 1 ? 'visible' : 'hidden'};"
+          >
+            {ceilCount >= 1 ? ceilCount + 1 : ""}
+          </span>
+          <span class="ja">天井まで</span>
+          <span class="number">{remaining}</span>
+          <span class="ja">連</span>
+        {/if}
+      </div>
+    {/if}
   </div>
-</main>
+</div>
 
 <style>
   .container {
