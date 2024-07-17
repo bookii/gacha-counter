@@ -9,12 +9,3 @@
     {step}
   {/if}
 </button>
-
-<style>
-  button {
-    height: 32px;
-    margin-top: 2px;
-    font-size: 16px;
-    color: var(--label-color);
-  }
-</style>

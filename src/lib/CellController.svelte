@@ -33,9 +33,9 @@
 
 <style>
   .container {
-    font-size: 20px;
+    font-size: 16px;
     display: grid;
-    gap: 12px;
+    gap: 8px;
   }
 
   .input-container {
@@ -49,7 +49,7 @@
   }
 
   label {
-    margin-right: 2px;
+    margin: 0 2px 2px 0;
   }
 
   .current-count {

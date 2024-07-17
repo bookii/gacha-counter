@@ -110,6 +110,7 @@
     position: relative;
     width: 360px;
     height: 360px;
+    padding-bottom: 12px;
   }
 
   .element {

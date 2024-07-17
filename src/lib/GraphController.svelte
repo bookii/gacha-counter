@@ -42,7 +42,13 @@
     <IncrementButton step={-10} on:click={() => increment(-10)} />
     <IncrementButton step={-1} on:click={() => increment(-1)} />
     <div class="counter-inner-container">
-      <input type="number" name="count" bind:value={count} step="1" />
+      <input
+        type="number"
+        name="count"
+        bind:value={count}
+        step="1"
+        style="margin-bottom: 2px;"
+      />
       <span>連</span>
     </div>
     <IncrementButton step={1} on:click={() => increment(1)} />
@@ -52,10 +58,14 @@
 </div>
 
 <style>
+  span {
+    margin-bottom: 2px;
+  }
+
   .container {
-    font-size: 20px;
+    font-size: 18px;
     display: grid;
-    gap: 12px;
+    gap: 8px;
   }
 
   .counter-container {

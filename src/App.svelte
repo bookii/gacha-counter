@@ -8,8 +8,14 @@
   var count = 0;
   var ceil = null;
   var themeColorCode = "#4d89ff";
+  var id = -1;
 
-  var items = writable([{ name: "ほしいもの", count: 0, goal: 1 }]);
+  var items = writable([createItem()]);
+
+  function createItem() {
+    id++;
+    return { id: id, name: "ほしいもの", count: 0, goal: 1 };
+  }
 </script>
 
 <div class="wrapper">
@@ -26,9 +32,15 @@
           on:updateCeil={(event) => (ceil = event.detail.ceil)}
         />
       </td>
+      <td>
+        <div class="colorPicker">
+          <input type="color" id="themeColor" bind:value={themeColorCode} />
+          <label for="themeColor">テーマカラー</label>
+        </div>
+      </td>
     </tr>
-    {#each $items as item}
-      <tr class="items">
+    {#each $items as item, index}
+      <tr class="item {index % 2 == 0 ? 'even' : 'odd'}">
         <td>
           <Cell
             name={item.name}
@@ -44,14 +56,31 @@
             bind:goal={item.goal}
           />
         </td>
+        <td>
+          <button
+            class="delete"
+            on:click={() => {
+              items.update((items) => {
+                return items.filter((i) => i.id !== item.id);
+              });
+            }}>削除</button
+          >
+        </td>
       </tr>
     {/each}
     <tr>
       <td />
       <td>
         <div class="colorPicker">
-          <input type="color" id="themeColor" bind:value={themeColorCode} />
-          <label for="themeColor">テーマカラー</label>
+          <button
+            on:click={() =>
+              items.update((items) => {
+                items.push(createItem());
+                return items;
+              })}
+          >
+            ほしいものを追加する
+          </button>
         </div>
       </td>
     </tr>
@@ -65,15 +94,7 @@
   }
 
   .graph {
-    padding-bottom: 24px;
-  }
-
-  tr:nth-child(1) {
-    border: 0;
-  }
-
-  tr:nth-child(2) {
-    border: 1px solid black;
+    padding-bottom: 32px;
   }
 
   td {
@@ -90,6 +111,14 @@
   }
 
   label {
-    font-size: 20px;
+    font-size: 16px;
+  }
+
+  .delete {
+    color: crimson;
+  }
+
+  .even td:nth-child(2) {
+    background-color: #f9f9f9;
   }
 </style>
