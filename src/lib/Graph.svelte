@@ -1,12 +1,11 @@
 <script>
   import { cubicOut } from "svelte/easing";
+  import { tweened } from "svelte/motion";
+  import UpGradient from "./gradient/UpGradient.svelte";
 
   export var themeColorCode;
   export var count;
   export var ceil;
-
-  import { tweened } from "svelte/motion";
-  import UpGradient from "./gradient/UpGradient.svelte";
 
   $: remaining = ceil - (count % ceil);
   $: isJustReachedCeil = count >= ceil && count % ceil < 10;

@@ -1,21 +1,49 @@
 <script>
+  import { tweened } from "svelte/motion";
   import RightGradient from "./gradient/RightGradient.svelte";
+  import { cubicOut } from "svelte/easing";
 
+  /** @type {string} 名前*/
   export var name;
+
+  /** @type {number} 現在の数 */
   export var count;
+
+  /** @type {number} 目標数 */
   export var goal;
+
+  /** @type {string} テーマカラーのコード */
   export var themeColorCode;
 
   const contentWidth = 360;
   const contentHeight = 60;
   const borderWidth = 4;
-  $: restLength = (() => {
-    if (count == null || goal == null) {
-      return contentWidth;
-    } else {
-      return Math.max(contentWidth * (1 - count / goal), 0);
+  const proportion = tweened(getProportion(count, goal), {
+    duration: 0,
+  });
+  var previousProportion = getProportion(count, goal);
+  $: {
+    const currentProportion = getProportion(count, goal);
+    const delta = Math.abs(currentProportion - previousProportion);
+    const duration = Math.max(250, delta * 500);
+    proportion.set(currentProportion, {
+      duration: duration,
+      easing: cubicOut,
+    });
+  }
+
+  $: restLength = contentWidth * (1 - $proportion);
+
+  /**
+   * @param {number} count
+   * @param {number} goal
+   */
+  function getProportion(count, goal) {
+    if (count == null || goal == null || goal == 0) {
+      return 0;
     }
-  })();
+    return Math.min(count / goal, 1);
+  }
 
   const colorId = "cell";
   const fillColorId = `url(#${colorId})`;

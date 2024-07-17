@@ -12,7 +12,8 @@
 
 <style>
   button {
-    height: 30px;
+    height: 32px;
+    margin-top: 2px;
     font-size: 16px;
     color: var(--label-color);
   }

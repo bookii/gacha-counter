@@ -15,3 +15,23 @@ span {
   -webkit-text-stroke: 4px rgba(255, 255, 255, 0.9);
   paint-order: stroke fill;
 }
+
+input {
+  height: 30px;
+  font-size: 20px;
+  color: var(--label-color);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  width: 3em;
+  margin: 0 2px 0 2px;
+  /* Firefox */
+  appearance: textfield;
+}
