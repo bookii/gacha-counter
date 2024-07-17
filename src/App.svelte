@@ -83,6 +83,7 @@
           </button>
         </div>
       </td>
+      <td />
     </tr>
   </table>
 </div>
@@ -97,9 +98,21 @@
     padding-bottom: 32px;
   }
 
+  table {
+    border-collapse: collapse;
+  }
+
   td {
     padding: 12px 36px;
     vertical-align: left;
+  }
+
+  td:nth-child(2) {
+    background-color: var(--background-color);
+  }
+
+  td:nth-child(3) {
+    background-color: var(--background-color);
   }
 
   .colorPicker {

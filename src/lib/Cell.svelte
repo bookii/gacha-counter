@@ -81,11 +81,23 @@
       rx="8"
       ry="8"
     />
+    <text
+      text-anchor="start"
+      x={borderWidth + 16}
+      y={borderWidth + contentHeight / 2 + 2}
+      alignment-baseline="middle"
+    >
+      {name}
+    </text>
+    <text
+      text-anchor="end"
+      x={contentWidth + borderWidth - 16}
+      y={borderWidth + contentHeight / 2 + 2}
+      alignment-baseline="middle"
+    >
+      {count}
+    </text>
   </svg>
-  <div class="element text-container">
-    <span class="name">{name}</span>
-    <span>{count}</span>
-  </div>
 </div>
 
 <style>
@@ -112,24 +124,13 @@
     fill: transparent;
   }
 
-  .text-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .text-container span {
-    font-size: 32px;
+  text {
     font-weight: bold;
-    padding: 0px 12px 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-  }
-
-  .name {
-    flex: 1;
+    font-size: 30px;
+    fill: var(--label-color);
+    stroke: var(--text-border-color);
+    stroke-width: 4;
+    paint-order: stroke;
+    stroke-linejoin: round;
   }
 </style>

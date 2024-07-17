@@ -73,36 +73,45 @@
       stroke-dashoffset={circumference / 4}
       stroke-dasharray="{strokeLength}, {remainingStrokeLength}"
     />
-  </svg>
-  <div class="element count-container">
-    <div class="count">
-      <span class="number">{count ?? 0}</span>
-      <span class="ja">連</span>
-    </div>
+    <text
+      class="count"
+      text-anchor="middle"
+      x={borderWidth + radius}
+      y={ceil == null ? borderWidth + radius * 1.2 : borderWidth + radius * 1.1}
+      dx="4"
+    >
+      <tspan class="number">{count ?? 0}</tspan>
+      <tspan class="ja" dy="-2">連</tspan>
+    </text>
     {#if ceil != null}
-      <div class="count-ceil">
+      <text
+        class="ceil"
+        text-anchor="middle"
+        x={borderWidth + radius}
+        y={borderWidth + radius * 1.375}
+      >
         {#if isJustReachedCeil}
-          <span
+          <tspan
             class="number"
             style="visibility: {ceilCount >= 2 ? 'visible' : 'hidden'};"
           >
             {ceilCount >= 2 ? ceilCount : ""}
-          </span>
-          <span class="ja">天井到達!</span>
+          </tspan>
+          <tspan class="ja" dy="-0.5">天井到達!</tspan>
         {:else}
-          <span
+          <tspan
             class="number"
             style="visibility: {ceilCount >= 1 ? 'visible' : 'hidden'};"
           >
             {ceilCount >= 1 ? ceilCount + 1 : ""}
-          </span>
-          <span class="ja">天井まで</span>
-          <span class="number">{remaining}</span>
-          <span class="ja">連</span>
+          </tspan>
+          <tspan class="ja" dy="-1">天井まで</tspan>
+          <tspan class="number" dy="1">{remaining}</tspan>
+          <tspan class="ja" dy="-1">連</tspan>
         {/if}
-      </div>
+      </text>
     {/if}
-  </div>
+  </svg>
 </div>
 
 <style>
@@ -135,17 +144,32 @@
     fill: transparent;
   }
 
-  .count-container div {
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  .count-container span {
+  text {
     font-weight: bold;
+    /* gap between tspan */
+    font-size: 12px;
+    fill: var(--label-color);
+    stroke: var(--text-border-color);
+    stroke-width: 4;
+    paint-order: stroke;
+    stroke-linejoin: round;
+    white-space-collapse: collapse;
   }
 
-  .count {
-    margin: -40px 0 -20px 4px;
+  text.count {
+    fill: var(--label-color);
+  }
+
+  text.ceil {
+    fill: var(--secondary-label-color);
+  }
+
+  .count .number {
+    font-size: 108px;
+  }
+
+  .count .ja {
+    font-size: 36px;
   }
 
   .count > .number {
@@ -156,21 +180,14 @@
 
   .count > .ja {
     font-size: 36px;
+    margin-bottom: 20px;
   }
 
-  .count-ceil {
-    color: var(--secondary-label-color);
-    margin-bottom: -10px;
-    min-height: 30px;
-  }
-
-  .count-ceil > .number {
+  .ceil > .number {
     font-size: 30px;
-    position: relative;
-    top: 1px;
   }
 
-  .count-ceil > .ja {
+  .ceil > .ja {
     font-size: 18px;
   }
 </style>
