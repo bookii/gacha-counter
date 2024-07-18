@@ -206,6 +206,10 @@
     margin-top: 4px;
   }
 
+  dialog ul {
+    margin-top: 4px;
+  }
+
   dialog li {
     margin: 0 8px 0 -8px;
   }
