@@ -120,7 +120,7 @@
             >
               {ceilCount >= 2 ? ceilCount : ""}
             </tspan>
-            <tspan class="ja" dy="-0.5">天井到達!</tspan>
+            <tspan class="ja" dy="-1">天井到達!</tspan>
           {:else}
             <tspan
               class="number"
