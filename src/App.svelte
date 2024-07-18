@@ -26,8 +26,14 @@
     return { id: id, name: "ほしいもの", count: 0, goal: 1 };
   }
 
-  function showDialog() {
-    document.querySelector("dialog").showModal();
+  /**
+   * @param {string} [id]
+   */
+  function showDialog(id) {
+    const dialog = document.querySelector(`#${id}`);
+    if (dialog && dialog instanceof HTMLDialogElement) {
+      dialog.showModal();
+    }
   }
 </script>
 
@@ -100,7 +106,28 @@
   </table>
 </div>
 
-<dialog>
+<dialog id="how-to-use">
+  <div class="how-to-use-container">
+    <div>
+      OBSの「ウィンドウキャプチャ」でこのページをキャプチャしてください。
+    </div>
+    <div>設定した背景色はクロマキーで透過することが可能です。</div>
+    <div>
+      ※OBSの「ブラウザ」は色の選択や日本語入力ができないので非推奨です。
+    </div>
+  </div>
+  <form method="dialog">
+    <button
+      on:click={() => {
+        showDialog();
+      }}
+    >
+      OK
+    </button>
+  </form>
+</dialog>
+
+<dialog id="notice">
   <ul>
     <li>個人・企業を問わず商業利用可能です。</li>
     <li>クレジット表記や利用報告の義務はありません。</li>
@@ -120,8 +147,11 @@
 </dialog>
 
 <Footer
-  on:clickNote={() => {
-    showDialog();
+  on:clickHowToUse={() => {
+    showDialog("how-to-use");
+  }}
+  on:clickNotice={() => {
+    showDialog("notice");
   }}
 />
 
@@ -166,6 +196,14 @@
     border-radius: 4px;
     color: var(--label-color);
     text-decoration-color: var(--label-color);
+  }
+
+  .how-to-use-container {
+    margin-bottom: 16px;
+  }
+
+  dialog div + div {
+    margin-top: 4px;
   }
 
   dialog li {

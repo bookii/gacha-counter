@@ -3,8 +3,12 @@
 
   const dispatch = createEventDispatcher();
 
-  function onClickNote() {
-    dispatch("clickNote");
+  function onClickNotice() {
+    dispatch("clickNotice");
+  }
+
+  function onClickHowToUse() {
+    dispatch("clickHowToUse");
   }
 </script>
 
@@ -14,7 +18,11 @@
   </div>
   <span>|</span>
   <div class="footer-item">
-    <button on:click={onClickNote}>README</button>
+    <button on:click={onClickHowToUse}>使い方</button>
+  </div>
+  <span>|</span>
+  <div class="footer-item">
+    <button on:click={onClickNotice}>注意事項</button>
   </div>
 </footer>
 
