@@ -5,6 +5,7 @@
   import GraphController from "./lib/GraphController.svelte";
   import CellController from "./lib/CellController.svelte";
   import Header from "./Header.svelte";
+  import Footer from "./Footer.svelte";
 
   var count = 0;
   var ceil = null;
@@ -15,6 +16,7 @@
   /** @type {string} 背景色のカラーコード */
   var backgroundColorCode = "#00ff00";
 
+  /** @type {number} アイテムのID */
   var id = -1;
 
   var items = writable([createItem()]);
@@ -22,6 +24,10 @@
   function createItem() {
     id++;
     return { id: id, name: "ほしいもの", count: 0, goal: 1 };
+  }
+
+  function showDialog() {
+    document.querySelector("dialog").showModal();
   }
 </script>
 
@@ -94,6 +100,31 @@
   </table>
 </div>
 
+<dialog>
+  <ul>
+    <li>個人・企業を問わず商業利用可能です。</li>
+    <li>クレジット表記や利用報告の義務はありません。</li>
+    <li>
+      本Webサイトの利用により発生したトラブルについては、一切の責任を負いかねます。
+    </li>
+  </ul>
+  <form method="dialog">
+    <button
+      on:click={() => {
+        showDialog();
+      }}
+    >
+      OK
+    </button>
+  </form>
+</dialog>
+
+<Footer
+  on:clickNote={() => {
+    showDialog();
+  }}
+/>
+
 <style>
   .wrapper {
     display: flex;
@@ -128,5 +159,30 @@
 
   .delete {
     color: crimson;
+  }
+
+  dialog {
+    border: 0.1px solid var(--label-color);
+    border-radius: 4px;
+    color: var(--label-color);
+    text-decoration-color: var(--label-color);
+  }
+
+  dialog li {
+    margin: 0 8px 0 -8px;
+  }
+
+  dialog li + li {
+    margin-top: 4px;
+  }
+
+  dialog form {
+    display: flex;
+    justify-content: center;
+  }
+
+  dialog::backdrop {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(4px);
   }
 </style>
