@@ -1,7 +1,8 @@
 <script>
-  import { cubicOut } from "svelte/easing";
+  import { cubicIn, cubicInOut, cubicOut } from "svelte/easing";
   import { tweened } from "svelte/motion";
   import UpGradient from "./gradient/UpGradient.svelte";
+  import { scale } from "svelte/transition";
 
   export var themeColorCode;
   export var count;
@@ -17,6 +18,24 @@
   $: size = (radius + borderWidth) * 2;
   $: outlineRadius = radius + borderWidth / 2;
   $: graphRadius = radius - graphWidth / 2;
+
+  $: countTextX = borderWidth + radius;
+  $: countTextY =
+    ceil == null ? borderWidth + radius * 1.2 : borderWidth + radius * 1.1;
+  var textScale = tweened(1);
+  $: {
+    if (isJustReachedCeil) {
+      textScale.set(1.5, {
+        duration: 300,
+        easing: cubicInOut,
+      });
+      textScale.set(1, {
+        delay: 300,
+        duration: 300,
+        easing: cubicInOut,
+      });
+    }
+  }
 
   const proportion = tweened(0);
   var previousProportion = 0;
@@ -73,44 +92,49 @@
       stroke-dashoffset={circumference / 4}
       stroke-dasharray="{strokeLength}, {remainingStrokeLength}"
     />
-    <text
-      class="count"
-      text-anchor="middle"
-      x={borderWidth + radius}
-      y={ceil == null ? borderWidth + radius * 1.2 : borderWidth + radius * 1.1}
-      dx="4"
+    <g
+      transform="translate({(1 - $textScale) * countTextX},
+       {(1 - $textScale) * countTextY}) scale({$textScale})"
     >
-      <tspan class="number">{count ?? 0}</tspan>
-      <tspan class="ja" dy="-2">連</tspan>
-    </text>
-    {#if ceil != null}
       <text
-        class="ceil"
+        class="count"
         text-anchor="middle"
-        x={borderWidth + radius}
-        y={borderWidth + radius * 1.375}
+        x={countTextX}
+        y={countTextY}
+        dx="4"
       >
-        {#if isJustReachedCeil}
-          <tspan
-            class="number"
-            style="visibility: {ceilCount >= 2 ? 'visible' : 'hidden'};"
-          >
-            {ceilCount >= 2 ? ceilCount : ""}
-          </tspan>
-          <tspan class="ja" dy="-0.5">天井到達!</tspan>
-        {:else}
-          <tspan
-            class="number"
-            style="visibility: {ceilCount >= 1 ? 'visible' : 'hidden'};"
-          >
-            {ceilCount >= 1 ? ceilCount + 1 : ""}
-          </tspan>
-          <tspan class="ja" dy="-1">天井まで</tspan>
-          <tspan class="number" dy="1">{remaining}</tspan>
-          <tspan class="ja" dy="-1">連</tspan>
-        {/if}
+        <tspan class="number">{count ?? 0}</tspan>
+        <tspan class="ja" dy="-2">連</tspan>
       </text>
-    {/if}
+      {#if ceil != null}
+        <text
+          class="ceil"
+          text-anchor="middle"
+          x={borderWidth + radius}
+          y={borderWidth + radius * 1.375}
+        >
+          {#if isJustReachedCeil}
+            <tspan
+              class="number"
+              style="visibility: {ceilCount >= 2 ? 'visible' : 'hidden'};"
+            >
+              {ceilCount >= 2 ? ceilCount : ""}
+            </tspan>
+            <tspan class="ja" dy="-0.5">天井到達!</tspan>
+          {:else}
+            <tspan
+              class="number"
+              style="visibility: {ceilCount >= 1 ? 'visible' : 'hidden'};"
+            >
+              {ceilCount >= 1 ? ceilCount + 1 : ""}
+            </tspan>
+            <tspan class="ja" dy="-1">天井まで</tspan>
+            <tspan class="number" dy="1">{remaining}</tspan>
+            <tspan class="ja" dy="-1">連</tspan>
+          {/if}
+        </text>
+      {/if}
+    </g>
   </svg>
 </div>
 

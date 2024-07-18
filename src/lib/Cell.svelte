@@ -1,7 +1,7 @@
 <script>
   import { tweened } from "svelte/motion";
   import RightGradient from "./gradient/RightGradient.svelte";
-  import { cubicOut } from "svelte/easing";
+  import { cubicOut, cubicInOut } from "svelte/easing";
 
   /** @type {string} 名前*/
   export var name;
@@ -17,20 +17,42 @@
 
   const contentWidth = 360;
   const contentHeight = 60;
+  const padding = 20;
   const borderWidth = 4;
   const proportion = tweened(getProportion(count, goal), {
     duration: 0,
   });
   var previousProportion = getProportion(count, goal);
+  var currentProportion = getProportion(count, goal);
   $: {
-    const currentProportion = getProportion(count, goal);
+    currentProportion = getProportion(count, goal);
     const delta = Math.abs(currentProportion - previousProportion);
-    const duration = Math.max(250, delta * 500);
+    const duration = Math.max(300, delta * 600);
     proportion.set(currentProportion, {
       duration: duration,
       easing: cubicOut,
     });
   }
+
+  const textScale = tweened(1);
+  $: {
+    if (currentProportion >= 1) {
+      textScale.set(1.2, {
+        duration: 300,
+        easing: cubicInOut,
+      });
+      textScale.set(1, {
+        delay: 300,
+        duration: 300,
+        easing: cubicInOut,
+      });
+    }
+  }
+
+  const nameTextX = borderWidth + 16;
+  const nameTextY = borderWidth + contentHeight / 2 + 2;
+  const countTextX = contentWidth + borderWidth - 16;
+  const countTextY = borderWidth + contentHeight / 2 + 2;
 
   $: restLength = contentWidth * (1 - $proportion);
 
@@ -52,29 +74,29 @@
 <div class="container">
   <svg
     class="element"
-    width={contentWidth + borderWidth * 2}
-    height={contentHeight + borderWidth * 2}
+    width={contentWidth + (borderWidth + padding) * 2}
+    height={contentHeight + (borderWidth + padding) * 2}
   >
     <RightGradient {themeColorCode} id={colorId} />
     <rect
       class="filled"
-      x={borderWidth}
-      y={borderWidth}
+      x={borderWidth + padding}
+      y={borderWidth + padding}
       width={contentWidth}
       height={contentHeight}
       fill={fillColorId}
     />
     <rect
       class="background"
-      x={borderWidth + contentWidth - restLength}
-      y={borderWidth}
+      x={borderWidth + padding + contentWidth - restLength}
+      y={borderWidth + padding}
       width={restLength}
       height={contentHeight}
     />
     <rect
       class="border"
-      x={borderWidth / 2}
-      y={borderWidth / 2}
+      x={borderWidth / 2 + padding}
+      y={borderWidth / 2 + padding}
       width={contentWidth + borderWidth}
       height={contentHeight + borderWidth}
       stroke-width={borderWidth}
@@ -83,17 +105,21 @@
     />
     <text
       text-anchor="start"
-      x={borderWidth + 16}
-      y={borderWidth + contentHeight / 2 + 2}
+      x={nameTextX + padding}
+      y={nameTextY + padding}
       alignment-baseline="middle"
+      transform="scale({$textScale})"
+      transform-origin="center"
     >
       {name}
     </text>
     <text
       text-anchor="end"
-      x={contentWidth + borderWidth - 16}
-      y={borderWidth + contentHeight / 2 + 2}
+      x={countTextX + padding}
+      y={countTextY + padding}
       alignment-baseline="middle"
+      transform="scale({$textScale})"
+      transform-origin="center"
     >
       {count}
     </text>
@@ -103,8 +129,9 @@
 <style>
   .container {
     position: relative;
-    width: 360px;
-    height: 60px;
+    width: 400px;
+    height: 100px;
+    margin: -20px;
   }
 
   .element {

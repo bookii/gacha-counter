@@ -22,11 +22,16 @@
   <div class="input-container">
     <input type="text" name="item" placeholder="ほしいもの" bind:value={name} />
     <label for="goal">目標数</label>
-    <input type="number" name="goal" bind:value={goal} />
+    <input type="number" id="goal" bind:value={goal} />
   </div>
   <div class="input-container">
     <IncrementButton step={-1} on:click={() => increment(-1)} />
-    <input type="number" class="current-count" bind:value={count} />
+    <input
+      type="number"
+      class="current-count"
+      name="current-count"
+      bind:value={count}
+    />
     <IncrementButton step={1} on:click={() => increment(1)} />
   </div>
 </div>
