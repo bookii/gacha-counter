@@ -38,11 +38,12 @@
   $: {
     if (currentProportion >= 1) {
       textScale.set(1.2, {
+        delay: 100,
         duration: 300,
         easing: cubicInOut,
       });
       textScale.set(1, {
-        delay: 300,
+        delay: 400,
         duration: 300,
         easing: cubicInOut,
       });
