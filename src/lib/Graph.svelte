@@ -1,10 +1,9 @@
 <script>
-  import { cubicIn, cubicInOut, cubicOut } from "svelte/easing";
+  import { cubicInOut, cubicOut } from "svelte/easing";
   import { tweened } from "svelte/motion";
   import UpGradient from "./gradient/UpGradient.svelte";
-  import { scale } from "svelte/transition";
 
-  export var themeColorCode;
+  export var graphColorCode;
   export var count;
   export var ceil;
 
@@ -67,7 +66,7 @@
 
 <div class="container">
   <svg class="element" width={size} height={size}>
-    <UpGradient {themeColorCode} id={colorId} />
+    <UpGradient colorCode={graphColorCode} id={colorId} />
     <circle
       class="background"
       cx="50%"
@@ -161,7 +160,7 @@
 
   .graph-track {
     fill: transparent;
-    stroke: #f2f2f2;
+    stroke: var(--secondary-background-color);
   }
 
   .graph-filled {

@@ -6,9 +6,14 @@
   --label-color: #4d4d4d;
   --secondary-label-color: #999999;
   --background-color: #ffffff;
+  --secondary-background-color: #f2f2f2;
   --border-color: #e6e6e6;
   --border-width: 4px;
   --text-border-color: rgba(255, 255, 255, 0.9);
+}
+
+body {
+  margin: 0;
 }
 
 input {

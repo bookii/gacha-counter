@@ -3,7 +3,7 @@
   import RightGradient from "./gradient/RightGradient.svelte";
   import { cubicOut, cubicInOut } from "svelte/easing";
 
-  /** @type {string} 名前*/
+  /** @type {string} 名前 */
   export var name;
 
   /** @type {number} 現在の数 */
@@ -12,8 +12,8 @@
   /** @type {number} 目標数 */
   export var goal;
 
-  /** @type {string} テーマカラーのコード */
-  export var themeColorCode;
+  /** @type {string} グラフのカラーのコード */
+  export var graphColorCode;
 
   const contentWidth = 360;
   const contentHeight = 60;
@@ -78,7 +78,7 @@
     width={contentWidth + (borderWidth + padding) * 2}
     height={contentHeight + (borderWidth + padding) * 2}
   >
-    <RightGradient {themeColorCode} id={colorId} />
+    <RightGradient colorCode={graphColorCode} id={colorId} />
     <rect
       class="filled"
       x={borderWidth + padding}

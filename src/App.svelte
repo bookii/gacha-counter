@@ -4,11 +4,16 @@
   import Cell from "./lib/Cell.svelte";
   import GraphController from "./lib/GraphController.svelte";
   import CellController from "./lib/CellController.svelte";
+  import Header from "./Header.svelte";
 
   var count = 0;
   var ceil = null;
-  var themeColorCode = "#4d89ff";
-  var backgroundColorCode = "#ffffff";
+
+  /** @type {string} グラフのカラーコード */
+  var graphColorCode = "#4d89ff";
+
+  /** @type {string} 背景色のカラーコード */
+  var backgroundColorCode = "#00ff00";
 
   var id = -1;
 
@@ -20,12 +25,14 @@
   }
 </script>
 
+<Header bind:graphColorCode bind:backgroundColorCode />
+
 <div class="wrapper" style="--display-background-color: {backgroundColorCode}">
   <table>
     <tr class="graph">
       <td>
         <div>
-          <Graph {count} {ceil} {themeColorCode} />
+          <Graph {count} {ceil} {graphColorCode} />
         </div>
       </td>
       <td>
@@ -35,20 +42,7 @@
         />
       </td>
       <td>
-        <div class="color-picker-container">
-          <div class="color-picker">
-            <input type="color" id="theme-color" bind:value={themeColorCode} />
-            <label for="theme-color">テーマ色</label>
-          </div>
-          <div class="color-picker">
-            <input
-              type="color"
-              id="background-color"
-              bind:value={backgroundColorCode}
-            />
-            <label for="background-color">背景色</label>
-          </div>
-        </div>
+        <div class="color-picker-container"></div>
       </td>
     </tr>
     {#each $items as item, index}
@@ -58,7 +52,7 @@
             name={item.name}
             count={item.count}
             goal={item.goal}
-            {themeColorCode}
+            {graphColorCode}
           />
         </td>
         <td>
@@ -104,6 +98,7 @@
   .wrapper {
     display: flex;
     justify-content: space-between;
+    padding: 16px;
   }
 
   table {
@@ -129,26 +124,6 @@
 
   td:nth-child(3) {
     background-color: var(--background-color);
-  }
-
-  input[type="color"] {
-    height: 30px;
-  }
-
-  .color-picker-container {
-    display: grid;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .color-picker {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  label {
-    font-size: 16px;
   }
 
   .delete {
