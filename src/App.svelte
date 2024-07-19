@@ -109,7 +109,7 @@
 <dialog id="how-to-use">
   <div class="how-to-use-container">
     <div>
-      OBSの「ウィンドウキャプチャ」でこのページをキャプチャしてください。
+      OBSの「ウィンドウキャプチャ」でグラフの部分をキャプチャしてください。
     </div>
     <div>設定した背景色はクロマキーで透過することができます。</div>
     <div>
